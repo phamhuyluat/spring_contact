@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +32,12 @@ public class ContactController {
         return "form";
     }
     
+    @GetMapping("/contact/{id}/edit")
+    public String edit(@PathVariable int id, Model model) {
+    	System.out.println("chay toi day khong");
+        model.addAttribute("contact", contactService.findOne(id));
+        return "form";
+    }
     @PostMapping("/contact/save")
     public String save(@Valid Contact contact, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
@@ -40,4 +47,6 @@ public class ContactController {
         redirect.addFlashAttribute("success", "Saved contact successfully!");
         return "redirect:/contact";
     }
+    
+    
 }
