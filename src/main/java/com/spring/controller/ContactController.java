@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.domain.Contact;
@@ -54,5 +55,15 @@ public class ContactController {
         redirect.addFlashAttribute("success", "Deleted contact successfully!");
         return "redirect:/contact";
      }
+    
+    @GetMapping("/contact/search")
+    public String search(@RequestParam("q") String q, Model model) {
+        if (q.equals("")) {
+            return "redirect:/contact";
+        }
+
+        model.addAttribute("contacts", contactService.search(q));
+        return "list";
+    }
     
 }
