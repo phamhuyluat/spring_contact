@@ -32,12 +32,6 @@ public class ContactController {
         return "form";
     }
     
-    @GetMapping("/contact/{id}/edit")
-    public String edit(@PathVariable int id, Model model) {
-    	System.out.println("chay toi day khong");
-        model.addAttribute("contact", contactService.findOne(id));
-        return "form";
-    }
     @PostMapping("/contact/save")
     public String save(@Valid Contact contact, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
@@ -48,5 +42,17 @@ public class ContactController {
         return "redirect:/contact";
     }
     
+    @GetMapping("/contact/{id}/edit")
+    public String edit(@PathVariable int id, Model model) {
+    	System.out.println("chay toi day khong");
+    	model.addAttribute("contact", contactService.findOne(id));
+    	return "form";
+    }
+    @GetMapping("/contact/{id}/delete")
+    public String delete(@PathVariable int id, RedirectAttributes redirect) {
+        contactService.delete(id);
+        redirect.addFlashAttribute("success", "Deleted contact successfully!");
+        return "redirect:/contact";
+     }
     
 }
