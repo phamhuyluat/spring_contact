@@ -22,10 +22,13 @@ public class Contact implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private int id;
-
+    
+    @NotEmpty
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotEmpty
+    @Email
     @Column(name = "email")
     private String email;
 
